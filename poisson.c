@@ -25,8 +25,8 @@ struct jacobi_params {
 };
 
 void print_matrix(double* matrix, int total_n, int total_m) {
-    for (int j = (total_m); j >= 0; j--) {
-        for (int i = (total_n); i >= 0; i--) {
+    for (int j = (total_m - 1); j >= 0; j--) {
+        for (int i = (total_n - 1); i >= 0; i--) {
             printf("%2.6f\t", matrix[POINT(i, j)]);
         }
         printf("\n");
@@ -168,7 +168,7 @@ int main(int argc, char *argv[]) {
     double x, y;
     for (int i = 0; i < total_n; i++) {
         printf("Setting up point x=%d, y=0 and y=%d\n", i, total_m - 1);
-        x = (((double) i / (double) (total_n)) * x_size) + x_min;   // x
+        x = (((double) i / (double) (total_n)) * x_size) + x_min;       // x
         t_appx[POINT(i, 0)] = x;                                        // T(x, 0) = x
         t_appx[POINT(i, (total_m - 1))] = x * exp(1);                   // T(x, 1) = x * e
     }
@@ -207,6 +207,7 @@ int main(int argc, char *argv[]) {
         x = (((double) i / (double) (total_n)) * x_size) + x_min; // x
         for (int j = 0; j < total_m; j++) {
             y = (((double) j / (double) (total_m)) * y_size) + y_min; // y
+            printf("(%2.6f, %2.6f)\n", x, y);
             t_exact[POINT(i, j)] = x * exp(y);
         }
     }
