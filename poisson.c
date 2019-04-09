@@ -76,6 +76,7 @@ void* jacobi_iteration(void* v_param) {
     }
 
     copy_local_to_global(t_appx_new, n_offset, m_offset);
+    printf("%d: Copy succeeded.\n", t_num);
 
     printf("%d:\tn_off: %d\tm_off: %d\tn: %d\tm: %d\n", t_num, n_offset, m_offset, n, m);
 
