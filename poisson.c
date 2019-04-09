@@ -167,14 +167,14 @@ int main(int argc, char *argv[]) {
     // boundary conditions for the domain of interest
     double x, y;
     for (int i = 0; i < total_n; i++) {
-        printf("Setting up point x=%d, y=0 and y=%d", i, total_m - 1);
+        printf("Setting up point x=%d, y=0 and y=%d\n", i, total_m - 1);
         x = (((double) i / (double) (total_n)) * x_size) + x_min;   // x
         t_appx[POINT(i, 0)] = x;                                        // T(x, 0) = x
         t_appx[POINT(i, (total_m - 1))] = x * exp(1);                   // T(x, 1) = x * e
     }
 
     for (int i = 0; i < total_m; i++) {
-        printf("Setting up point x=0 and x=%d, y=%d", total_n, i);
+        printf("Setting up point x=0 and x=%d, y=%d\n", total_n, i);
         y = (((double) i / (double) (total_m)) * y_size) + y_min;   // y
         t_appx[POINT(0, i)] = 0;                                        // T(0, y) = 0
         t_appx[POINT((total_n - 1), i)] = 2 * exp(y);                   // T(2, y) = 2 * e^y
