@@ -54,7 +54,7 @@ double get_max_error(double* appx, double* exact, int total_n, int total_m) {
 void copy_local_to_global(double* local, int n_off, int m_off) {
     for (int i = n_off; i < (n_off + n); i++) {
         for (int j = m_off; j < (m_off + m); j++) {
-            t_appx[POINT(i, j)] = local[POINT(i, j)]; 
+            t_appx[POINT(i, j)] = local[POINT_LOCAL(i, j)]; 
         }
     }
 }
@@ -96,7 +96,7 @@ void* jacobi_iteration(void* v_param) {
 
                 t_appx_new[POINT_LOCAL((i - n_offset),(j - m_offset))] = 0.25 * (t_appx[POINT((i - 1), j)]
                         + t_appx[POINT((i + 1), j)] + t_appx[POINT(i, (j - 1))] + t_appx[POINT(i, (j + 1))]);
-                double change = fabs(t_appx_new[POINT(i, j)] - t_appx[POINT(i, j)]);
+                double change = fabs(t_appx_new[POINT_LOCAL(i, j)] - t_appx[POINT(i, j)]);
 
                 if (change > max_change) {
                     max_change = change;
