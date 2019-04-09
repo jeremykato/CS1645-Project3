@@ -90,7 +90,7 @@ void* jacobi_iteration(void* v_param) {
         }
 
         pthread_mutex_lock(&mutex);
-        printf("%d: Got lock, my change val is %2.12f.\n", t_num, max_change);
+        //printf("%d: Got lock, my change val is %2.12f.\n", t_num, max_change);
         if (global_max_change > max_change) {
             global_max_change = max_change;
         }
@@ -98,9 +98,9 @@ void* jacobi_iteration(void* v_param) {
 
         // copy old into new
         pthread_barrier_wait(&barrier);
-        printf("%d: Waiting to copy.\n", t_num);
+        //printf("%d: Waiting to copy.\n", t_num);
         copy_local_to_global(t_appx_new, n_offset, m_offset);
-        printf("%d: Copied, waiting to go on.\n", t_num);
+        //printf("%d: Copied, waiting to go on.\n", t_num);
         pthread_barrier_wait(&barrier);
     }
 
