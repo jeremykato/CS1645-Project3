@@ -25,8 +25,8 @@ struct jacobi_params {
 };
 
 void print_matrix(double* matrix, int total_n, int total_m) {
-    for (int j = (total_m - 1); j >= 0; j--) {
-        for (int i = (total_n - 1); i >= 0; i--) {
+    for (int j = (total_m); j >= 0; j--) {
+        for (int i = (total_n); i >= 0; i--) {
             printf("%2.6f\t", matrix[POINT(i, j)]);
         }
         printf("\n");
@@ -233,6 +233,6 @@ int main(int argc, char *argv[]) {
 
     // }
 
-    //print_matrix(t_appx, n, m);
-    //print_matrix(t_exact, n, m);
+    print_matrix(t_appx, total_n, total_m);
+    print_matrix(t_exact, total_n, total_m);
 }
