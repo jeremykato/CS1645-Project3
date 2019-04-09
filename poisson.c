@@ -26,7 +26,7 @@ struct jacobi_params {
 
 void print_matrix(double* matrix, int total_n, int total_m) {
     for (int j = (total_m - 1); j >= 0; j--) {
-        for (int i = (total_n - 1); i >= 0; i--) {
+        for (int i = 0; i < total_n; i++) {
             printf("%2.6f\t", matrix[POINT(i, j)]);
         }
         printf("\n");
