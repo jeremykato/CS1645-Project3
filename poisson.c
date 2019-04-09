@@ -204,9 +204,9 @@ int main(int argc, char *argv[]) {
     // x/y min and max, but this will do for now (and for the exact answer, we worry about 
     // performance slightly less)
     for (int i = 0; i < total_n; i++) {
-        x = (((double) i / (double) (total_n)) * x_size) + x_min; // x
+        x = (((double) i / (double) (total_n - 1)) * x_size) + x_min; // x
         for (int j = 0; j < total_m; j++) {
-            y = (((double) j / (double) (total_m)) * y_size) + y_min; // y
+            y = (((double) j / (double) (total_m - 1)) * y_size) + y_min; // y
             printf("(%2.6f, %2.6f)\n", x, y);
             t_exact[POINT(i, j)] = x * exp(y);
         }
