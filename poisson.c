@@ -69,6 +69,8 @@ void* jacobi_iteration(void* v_param) {
     double *t_appx_new = calloc(n * m, sizeof(double));
     copy_local_to_global(t_appx_new, n_offset, m_offset);
 
+    printf("%d:\tn_off: %d\tm_off: %d\n", pthread_self(), n_offset, m_offset);
+
     // loop while the max change is fewer than our specified delta
     while (global_max_change > delta_change) {
 
