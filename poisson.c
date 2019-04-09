@@ -63,8 +63,11 @@ void* jacobi_iteration(void* v_param) {
     struct jacobi_params *params = (struct jacobi_params*) v_param;
     double max_change = 1.0; // once this is less than the delta_change, we finish
 
+
     int n_offset = params->n_offset, m_offset = params->m_offset;
     int t_num = params->t_num;
+    
+    printf("%d: Got params.\n", t_num);
 
     // the way our jacobi iteration runs, we need a separate data structure to put our
     // updated values into
