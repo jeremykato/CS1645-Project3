@@ -90,7 +90,7 @@ void* jacobi_iteration(void* v_param) {
         }
 
         pthread_mutex_lock(&mutex);
-        printf("%d: Got lock.\n", t_num);
+        printf("%d: Got lock, my change val is %2.6f.\n", t_num, max_change);
         if (global_max_change < max_change) {
             global_max_change = max_change;
         }
@@ -166,6 +166,7 @@ int main(int argc, char *argv[]) {
     global_max_change = 1.0;
     
     for (int i = 0; i < total_threads; i++) {
+        params[i] = i;
         params[i].n_offset = n * (i % threads_y) + 1;
         params[i].m_offset = m * (i / threads_y) + 1;
         pthread_create((threads + i), NULL, jacobi_iteration, (void*) (params + i));
