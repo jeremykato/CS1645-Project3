@@ -150,6 +150,11 @@ int main(int argc, char *argv[]) {
     t_appx  = (double*) calloc(total_grid_size, sizeof(double));
     t_exact = (double*) calloc(total_grid_size, sizeof(double));
 
+    if (t_appx == NULL || t_exact == NULL) {
+        printf("calloc failed: could not acquire memory.\n");
+        exit(-1);
+    }
+
     // boundary conditions for the domain of interest
     double x, y;
     for (int i = 0; i < total_n; i++) {
