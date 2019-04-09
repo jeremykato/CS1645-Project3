@@ -18,6 +18,7 @@ pthread_barrier_t barrier;
 pthread_mutex_t mutex;
 
 struct jacobi_params {
+    int t_num;
     int n_offset;
     int m_offset;
 };
@@ -63,13 +64,14 @@ void* jacobi_iteration(void* v_param) {
     double max_change = 1.0; // once this is less than the delta_change, we finish
 
     int n_offset = params->n_offset, m_offset = params->m_offset;
+    int t_num = params->t_num;
 
     // the way our jacobi iteration runs, we need a separate data structure to put our
     // updated values into
     double *t_appx_new = calloc(n * m, sizeof(double));
     copy_local_to_global(t_appx_new, n_offset, m_offset);
 
-    printf("%d:\tn_off: %d\tm_off: %d\n", pthread_self(), n_offset, m_offset);
+    printf("%d:\tn_off: %d\tm_off: %d\tn: %d\tm: %d\n", t_num, n_offset, m_offset, n, m);
 
     // loop while the max change is fewer than our specified delta
     while (global_max_change > delta_change) {
@@ -88,6 +90,7 @@ void* jacobi_iteration(void* v_param) {
         }
 
         pthread_mutex_lock(&mutex);
+        printf("%d: Got lock.\n", t_num);
         if (global_max_change < max_change) {
             global_max_change = max_change;
         }
@@ -95,7 +98,9 @@ void* jacobi_iteration(void* v_param) {
 
         // copy old into new
         pthread_barrier_wait(&barrier);
+        printf("%d: Waiting to copy.\n", t_num);
         copy_local_to_global(t_appx_new, n_offset, m_offset);
+        printf("%d: Copied, waiting to go on.\n", t_num);
         pthread_barrier_wait(&barrier);
     }
 
@@ -156,7 +161,7 @@ int main(int argc, char *argv[]) {
     // pthreads go here
     pthread_t *threads = calloc(total_threads, sizeof(pthread_t));
     struct jacobi_params *params = calloc(total_threads, sizeof(struct jacobi_params));
-    pthread_barrier_init(&barrier, NULL, total_threads);
+    pthread_barrier_init(&barrier, NULL, (unsigned int) total_threads);
     pthread_mutex_init(&mutex, NULL);
     global_max_change = 1.0;
     
