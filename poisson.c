@@ -61,7 +61,6 @@ void* jacobi_iteration(void* v_param) {
 
     struct jacobi_params *params = (struct jacobi_params*) v_param;
     double max_change = 1.0; // once this is less than the delta_change, we finish
-    double x_min = params->x_min, y_min = params->y_min;
 
     int n_offset = params->n_offset, m_offset = params->m_offset;
 
@@ -124,8 +123,8 @@ int main(int argc, char *argv[]) {
     delta_change = atof(argv[7]);
 
     // threads
-    const int   threads_x = atoi(argv[8]);
-                threads_y = atoi(argv[9]); 
+    const int   threads_x = atoi(argv[8]),
+                threads_y = atoi(argv[9]), 
                 total_threads = threads_x * threads_y;
 
     // grid sizes
@@ -135,8 +134,8 @@ int main(int argc, char *argv[]) {
 
     // temperature grid for the approximated solution
     // and the exact solution
-    *t_appx  = (double*) calloc(total_grid_size, sizeof(double));
-    *t_exact = (double*) calloc(total_grid_size, sizeof(double));
+    t_appx  = (double*) calloc(total_grid_size, sizeof(double));
+    t_exact = (double*) calloc(total_grid_size, sizeof(double));
 
     // boundary conditions for the domain of interest
     double x, y;
