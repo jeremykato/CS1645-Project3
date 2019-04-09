@@ -174,7 +174,7 @@ int main(int argc, char *argv[]) {
     }
 
     for (int i = 0; i < total_m; i++) {
-        printf("Setting up point x=0 and x=%d, y=%d\n", total_n, i);
+        printf("Setting up point x=0 and x=%d, y=%d\n", total_n - 1, i);
         y = (((double) i / (double) (total_m)) * y_size) + y_min;   // y
         t_appx[POINT(0, i)] = 0;                                        // T(0, y) = 0
         t_appx[POINT((total_n - 1), i)] = 2 * exp(y);                   // T(2, y) = 2 * e^y
