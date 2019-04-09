@@ -96,7 +96,7 @@ void* jacobi_iteration(void* v_param) {
 
                 t_appx_new[POINT_LOCAL((i - n_offset),(j - m_offset))] = 0.25 * (t_appx[POINT((i - 1), j)]
                         + t_appx[POINT((i + 1), j)] + t_appx[POINT(i, (j - 1))] + t_appx[POINT(i, (j + 1))]);
-                double change = fabs(t_appx_new[POINT_LOCAL(i, j)] - t_appx[POINT(i, j)]);
+                double change = fabs(t_appx_new[POINT_LOCAL(i  - n_offset, j- m_offset)] - t_appx[POINT(i, j)]);
 
                 if (change > max_change) {
                     max_change = change;
