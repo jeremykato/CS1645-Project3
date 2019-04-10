@@ -162,6 +162,7 @@ int main(int argc, char *argv[]) {
         printf("Setting up points: (%2.4f, %2.4f) and (%2.4f, %2.4f)\n", x, y_min, x, y_max);
         t_appx[POINT(i, 0)] = x * exp(y_min);                               // T(x, 0) = x
         t_appx[POINT(i, (total_m - 1))] = x * exp(y_max);                   // T(x, 1) = x * e
+        printf("\t%2.4f\t%2.4f\n", t_appx[POINT(i, 0)], t_appx[POINT(i, (total_m - 1))]);
     }
 
     for (int i = 0; i < total_m; i++) {
@@ -169,6 +170,7 @@ int main(int argc, char *argv[]) {
         printf("Setting up points: (%2.4f, %2.4f) and (%2.4f, %2.4f)\n", x_min, y, x_max, y);
         t_appx[POINT(0, i)] = x_min * exp(y);                           // T(0, y) = 0
         t_appx[POINT((total_n - 1), i)] = x_max * exp(y);               // T(2, y) = 2 * e^y
+        printf("\t%2.4f\t%2.4f\n", t_appx[POINT(0, i)], t_appx[POINT((total_n - 1), i)]);
     }
 
     // pthreads go here
