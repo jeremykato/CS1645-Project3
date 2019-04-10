@@ -173,7 +173,7 @@ int main(int argc, char *argv[]) {
         //printf("\t%2.4f\t%2.4f\n", t_appx[POINT(0, i)], t_appx[POINT((total_n - 1), i)]);
     }
 
-    print_matrix(t_axpp, total_n, total_m);
+    print_matrix(t_appx, total_n, total_m);
 
     // pthreads go here
     pthread_t *threads = calloc(total_threads, sizeof(pthread_t));
