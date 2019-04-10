@@ -196,8 +196,8 @@ int main(int argc, char *argv[]) {
     
     for (int i = 0; i < total_threads; i++) {
         params[i].t_num = i;
-        params[i].n_offset = ((n * i) % (total_n - 2)) + 1;
-        params[i].m_offset = ((m * i) / (total_m - 2)) + 1;
+        params[i].n_offset = (i % threads_y) * n;
+        params[i].m_offset = (i / threads_y) * m;
         pthread_create((threads + i), NULL, jacobi_iteration, (void*) (params + i));
     }
 
