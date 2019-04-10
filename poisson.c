@@ -87,27 +87,28 @@ void* jacobi_iteration(void* v_param) {
         }
         pthread_barrier_wait(barrier);
 
-        //printf("%d waiting for lock.\n", t_num);
         if (pthread_mutex_lock(mutex)) {
-            //printf("ERROR: mutex lock failure\n");
+            printf("ERROR: mutex lock failure\n");
             exit(-1);
         }
-        //printf("%d Got lock, my change val is %2.12f, global is %2.12f\n", t_num, max_change, global_max_change);
         if (global_max_change < max_change) {
-            //printf("%d is here\n", t_num);
             global_max_change = max_change;
         }
         else {
             max_change = global_max_change;
         }
-        //printf("%d over here\n", t_num);
         if (pthread_mutex_unlock(mutex)) {
             printf("ERROR: mutex unlock failure\n");
             exit(-1);
         }
-        //printf("%d Lock released, waiting...\n", t_num);
         printf("%d says max_change is %2.6f\n", t_num, max_change);
         pthread_barrier_wait(barrier);
+
+        if (global_max_change > max_change) {
+            max_change = global_max_change;
+        }
+        pthread_barrier_wait(barrier);
+
     }
 
     printf("%d completed\n", t_num);
