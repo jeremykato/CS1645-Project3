@@ -62,10 +62,13 @@ void* jacobi_iteration(void* v_param) {
     printf("%d: Got params.\n", t_num);
 
     printf("%d:\tn_off: %d\tm_off: %d\tn: %d\tm: %d\n", t_num, n_offset, m_offset, n, m);
+    global_max_change = 100000000.0;
     // loop while the max change is fewer than our specified delta
     while (global_max_change > delta_change) {
 
-        global_max_change = 0.0;
+        pthread_barrier_wait(barrier);
+        printf("%d done waiting!.\n", t_num);
+
         max_change = 0.0;
         for (int j = m_offset; j < (m_offset + m); j++) {
             for (int i = n_offset; i < (n_offset + n); i++) {
@@ -98,9 +101,6 @@ void* jacobi_iteration(void* v_param) {
             exit(-1);
         }
         printf("%d Lock released, waiting...\n", t_num);
-
-        pthread_barrier_wait(barrier);
-        printf("%d done waiting!.\n", t_num);
     }
 
     // if we reach here, we're done!
