@@ -170,8 +170,12 @@ int main(int argc, char *argv[]) {
     // pthreads go here
     pthread_t *threads = calloc(total_threads, sizeof(pthread_t));
     struct jacobi_params *params = calloc(total_threads, sizeof(struct jacobi_params));
-    pthread_barrier_init(&barrier, NULL, (unsigned int) total_threads);
-    pthread_mutex_init(&mutex, NULL);
+    int res1 = pthread_barrier_init(&barrier, NULL, (unsigned int) total_threads);
+    int res2 = pthread_mutex_init(&mutex, NULL);
+    if (res1 || res2) {
+        printf("Error in setup of barrier and mutex\n");
+        return -1;
+    }
     global_max_change = 1.0;
     
     for (int i = 0; i < total_threads; i++) {
