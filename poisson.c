@@ -75,6 +75,7 @@ void* jacobi_iteration(void* v_param) {
     // loop while the max change is fewer than our specified delta
     while (global_max_change > delta_change) {
 
+        global_max_change = 0.0;
         max_change = 0.0;
         for (int j = m_offset; j < (m_offset + m); j++) {
             for (int i = n_offset; i < (n_offset + n); i++) {
