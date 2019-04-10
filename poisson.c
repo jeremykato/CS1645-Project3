@@ -164,7 +164,7 @@ int main(int argc, char *argv[]) {
         t_appx[POINT(i, (total_m - 1))] = x * exp(y_max);                   // T(x, 1) = x * e
     }
 
-    for (int i = 0; i < total_m; i++) {=
+    for (int i = 0; i < total_m; i++) {
         y = (((double) i / (double) (total_m - 1)) * y_size) + y_min;   // y
         printf("Setting up points: (%2.4f, %2.4f) and (%2.4f, %2.4f)\n", x_min, y, x_max, y);
         t_appx[POINT(0, i)] = x_min * exp(y);                           // T(0, y) = 0
