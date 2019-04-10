@@ -61,7 +61,7 @@ void* jacobi_iteration(void* v_param) {
     
     //printf("%d: Got params.\n", t_num);
 
-    printf("%d:\tn_off: %d\tm_off: %d\tn: %d\tm: %d\n", t_num, n_offset, m_offset, n, m);
+    //printf("%d:\tn_off: %d\tm_off: %d\tn: %d\tm: %d\n", t_num, n_offset, m_offset, n, m);
     global_max_change = delta_change;
     // loop while the max change is fewer than our specified delta
     while (max_change > delta_change) {
@@ -75,7 +75,7 @@ void* jacobi_iteration(void* v_param) {
         for (int j = m_offset; j < (m_offset + m); j++) {
             for (int i = n_offset; i < (n_offset + n); i++) {
 
-                printf("%d looking at global (%d, %d)\n", t_num, i, j);
+                //printf("%d looking at global (%d, %d)\n", t_num, i, j);
 
                 double old = t_appx[POINT(i, j)];
                 t_appx[POINT(i, j)] = 0.25 * (t_appx[POINT((i - 1), j)] + t_appx[POINT((i + 1), j)] + t_appx[POINT(i, (j - 1))] + t_appx[POINT(i, (j + 1))]);
@@ -184,7 +184,7 @@ int main(int argc, char *argv[]) {
     pthread_mutex_init(mutex, NULL);
     global_max_change = 1.0;
 
-    printf("%d %d %d %d\n", n, m, total_n, total_m);
+    //printf("%d %d %d %d\n", n, m, total_n, total_m);
     
     for (int i = 0; i < total_threads; i++) {
         params[i].t_num = i;
@@ -233,6 +233,6 @@ int main(int argc, char *argv[]) {
 
     // }
 
-    print_matrix(t_appx, total_n, total_m);
-    print_matrix(t_exact, total_n, total_m);
+    //print_matrix(t_appx, total_n, total_m);
+    //print_matrix(t_exact, total_n, total_m);
 }
