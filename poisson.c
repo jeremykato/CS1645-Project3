@@ -14,8 +14,8 @@ int total_n, total_m, total_grid_size, n, m;
 double *t_appx, *t_exact;
 double x_min, x_max, y_min, y_max, delta_change, x_size, y_size, global_max_change;
 
-pthread_barrier_t barrier;
-pthread_mutex_t mutex;
+pthread_barrier_t* barrier;
+pthread_mutex_t* mutex;
 
 struct jacobi_params {
     int t_num;
@@ -71,7 +71,7 @@ void* jacobi_iteration(void* v_param) {
     }
 
     printf("%d:\tn_off: %d\tm_off: %d\tn: %d\tm: %d\n", t_num, n_offset, m_offset, n, m);
-    pthread_barrier_wait(&barrier);
+    pthread_barrier_wait(barrier);
     // loop while the max change is fewer than our specified delta
     while (global_max_change > delta_change) {
 
@@ -93,7 +93,7 @@ void* jacobi_iteration(void* v_param) {
         }
 
         printf("%d: waiting for lock.\n", t_num);
-        if (pthread_mutex_lock(&mutex)) {
+        if (pthread_mutex_lock(mutex)) {
             printf("ERROR: mutex lock failure\n");
             exit(-1);
         }
@@ -103,13 +103,13 @@ void* jacobi_iteration(void* v_param) {
             global_max_change = max_change;
         }
         printf("%d over here\n", t_num);
-        if (pthread_mutex_unlock(&mutex)) {
+        if (pthread_mutex_unlock(mutex)) {
             printf("ERROR: mutex unlock failure\n");
             exit(-1);
         }
         int res2 = printf("%d: Lock released.\n", t_num);
 
-        pthread_barrier_wait(&barrier);
+        pthread_barrier_wait(barrier);
     }
 
     // if we reach here, we're done!
@@ -176,12 +176,12 @@ int main(int argc, char *argv[]) {
     // pthreads go here
     pthread_t *threads = calloc(total_threads, sizeof(pthread_t));
     struct jacobi_params *params = calloc(total_threads, sizeof(struct jacobi_params));
-    int res1 = pthread_barrier_init(&barrier, NULL, (unsigned int) total_threads);
-    int res2 = pthread_mutex_init(&mutex, NULL);
-    if (res1 || res2) {
-        printf("Error in setup of barrier and mutex\n");
-        return -1;
-    }
+
+    barrier = calloc(1, sizeof(pthread_barrier_t));
+    mutex = calloc(1, sizeof(pthread_mutex_t));
+
+    pthread_barrier_init(barrier, NULL, (unsigned int) total_threads);
+    pthread_mutex_init(mutex, NULL);
     global_max_change = 1.0;
     
     for (int i = 0; i < total_threads; i++) {
