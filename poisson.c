@@ -192,7 +192,7 @@ int main(int argc, char *argv[]) {
     pthread_mutex_init(mutex, NULL);
     global_max_change = 1.0;
 
-    //printf("%d %d %d %d\n", n, m, total_n, total_m);
+    printf("%d %d %d %d\n", n, m, total_n - 2, total_m - 2);
     
     for (int i = 0; i < total_threads; i++) {
         params[i].t_num = i;
