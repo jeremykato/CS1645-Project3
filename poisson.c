@@ -116,7 +116,7 @@ void* jacobi_iteration(void* v_param) {
 
     }
 
-    printf("%d completed\n", t_num);
+    //printf("%d completed\n", t_num);
 
     // if we reach here, we're done!
     return 0;
