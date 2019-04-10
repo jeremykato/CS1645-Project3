@@ -71,7 +71,6 @@ void* jacobi_iteration(void* v_param) {
     }
 
     printf("%d:\tn_off: %d\tm_off: %d\tn: %d\tm: %d\n", t_num, n_offset, m_offset, n, m);
-    pthread_barrier_wait(barrier);
     // loop while the max change is fewer than our specified delta
     while (global_max_change > delta_change) {
 
