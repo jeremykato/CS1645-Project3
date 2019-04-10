@@ -66,7 +66,6 @@ void* jacobi_iteration(void* v_param) {
     // loop while the max change is fewer than our specified delta
     while (max_change > delta_change) {
 
-        pthread_barrier_wait(barrier);
         global_max_change = 0;
         pthread_barrier_wait(barrier);
         //printf("%d done waiting!.\n", t_num);
@@ -106,6 +105,8 @@ void* jacobi_iteration(void* v_param) {
             exit(-1);
         }
         //printf("%d Lock released, waiting...\n", t_num);
+        
+        pthread_barrier_wait(barrier);
     }
 
     printf("%d completed\n", t_num);
