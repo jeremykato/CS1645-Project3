@@ -160,15 +160,15 @@ int main(int argc, char *argv[]) {
     for (int i = 0; i < total_n; i++) {
         printf("Setting up point x=%d, y=0 and y=%d\n", i, total_m - 1);
         x = (((double) i / (double) (total_n - 1)) * x_size) + x_min;       // x
-        t_appx[POINT(i, 0)] = x;                                        // T(x, 0) = x
-        t_appx[POINT(i, (total_m - 1))] = x * exp(1);                   // T(x, 1) = x * e
+        t_appx[POINT(i, 0)] = x * exp(y_min);                               // T(x, 0) = x
+        t_appx[POINT(i, (total_m - 1))] = x * exp(y_max);                   // T(x, 1) = x * e
     }
 
     for (int i = 0; i < total_m; i++) {
         printf("Setting up point x=0 and x=%d, y=%d\n", total_n - 1, i);
         y = (((double) i / (double) (total_m - 1)) * y_size) + y_min;   // y
-        t_appx[POINT(0, i)] = 0;                                        // T(0, y) = 0
-        t_appx[POINT((total_n - 1), i)] = 2 * exp(y);                   // T(2, y) = 2 * e^y
+        t_appx[POINT(0, i)] = x_min * exp(y);                           // T(0, y) = 0
+        t_appx[POINT((total_n - 1), i)] = x_max * exp(y);               // T(2, y) = 2 * e^y
     }
 
     // pthreads go here
