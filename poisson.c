@@ -236,6 +236,6 @@ int main(int argc, char *argv[]) {
 
     // }
 
-    //print_matrix(t_appx, total_n, total_m);
-    //print_matrix(t_exact, total_n, total_m);
+    print_matrix(t_appx, total_n, total_m);
+    print_matrix(t_exact, total_n, total_m);
 }
