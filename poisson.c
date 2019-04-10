@@ -59,7 +59,7 @@ void* jacobi_iteration(void* v_param) {
     int n_offset = params->n_offset, m_offset = params->m_offset;
     int t_num = params->t_num;
     
-    printf("%d: Got params.\n", t_num);
+    //printf("%d: Got params.\n", t_num);
 
     printf("%d:\tn_off: %d\tm_off: %d\tn: %d\tm: %d\n", t_num, n_offset, m_offset, n, m);
     global_max_change = delta_change;
@@ -69,13 +69,13 @@ void* jacobi_iteration(void* v_param) {
         pthread_barrier_wait(barrier);
         global_max_change = 0;
         pthread_barrier_wait(barrier);
-        printf("%d done waiting!.\n", t_num);
+        //printf("%d done waiting!.\n", t_num);
 
         max_change = 0.0;
         for (int j = m_offset; j < (m_offset + m); j++) {
             for (int i = n_offset; i < (n_offset + n); i++) {
 
-                printf("%d: looking at global (%d, %d), local (%d, %d)\n", t_num, i, j, (i - n_offset), (j - m_offset));
+                //printf("%d looking at global (%d, %d)\n", t_num, i, j);
 
                 double old = t_appx[POINT(i, j)];
                 t_appx[POINT(i, j)] = 0.25 * (t_appx[POINT((i - 1), j)] + t_appx[POINT((i + 1), j)] + t_appx[POINT(i, (j - 1))] + t_appx[POINT(i, (j + 1))]);
@@ -87,25 +87,25 @@ void* jacobi_iteration(void* v_param) {
             }
         }
 
-        printf("%d waiting for lock.\n", t_num);
+        //printf("%d waiting for lock.\n", t_num);
         if (pthread_mutex_lock(mutex)) {
-            printf("ERROR: mutex lock failure\n");
+            //printf("ERROR: mutex lock failure\n");
             exit(-1);
         }
-        printf("%d Got lock, my change val is %2.12f, global is %2.12f\n", t_num, max_change, global_max_change);
+        //printf("%d Got lock, my change val is %2.12f, global is %2.12f\n", t_num, max_change, global_max_change);
         if (global_max_change < max_change) {
-            printf("%d is here\n", t_num);
+            //printf("%d is here\n", t_num);
             global_max_change = max_change;
         }
         else {
             max_change = global_max_change;
         }
-        printf("%d over here\n", t_num);
+        //printf("%d over here\n", t_num);
         if (pthread_mutex_unlock(mutex)) {
             printf("ERROR: mutex unlock failure\n");
             exit(-1);
         }
-        printf("%d Lock released, waiting...\n", t_num);
+        //printf("%d Lock released, waiting...\n", t_num);
     }
 
     printf("%d completed\n", t_num);
@@ -179,7 +179,7 @@ int main(int argc, char *argv[]) {
     mutex = calloc(1, sizeof(pthread_mutex_t));
 
     pthread_barrier_init(barrier, NULL, (unsigned int) total_threads);
-    printf("Total threads: %ud\n", (unsigned int) total_threads);
+    //printf("Total threads: %ud\n", (unsigned int) total_threads);
     pthread_mutex_init(mutex, NULL);
     global_max_change = 1.0;
     
