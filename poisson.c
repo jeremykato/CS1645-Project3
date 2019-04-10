@@ -66,7 +66,7 @@ void* jacobi_iteration(void* v_param) {
     
     //printf("%d: Got params.\n", t_num);
 
-    printf("%d:\tn_off: %d\tm_off: %d\tn: %d\tm: %d\n", t_num, n_offset, m_offset, n, m);
+    //printf("%d:\tn_off: %d\tm_off: %d\tn: %d\tm: %d\n", t_num, n_offset, m_offset, n, m);
     global_max_change = delta_change;
     // loop while the max change is fewer than our specified delta
     while (max_change >= delta_change) {
@@ -192,7 +192,7 @@ int main(int argc, char *argv[]) {
     pthread_mutex_init(mutex, NULL);
     global_max_change = 1.0;
 
-    printf("%d %d %d %d\n", n, m, total_n - 2, total_m - 2);
+    //printf("%d %d %d %d\n", n, m, total_n - 2, total_m - 2);
     
     for (int i = 0; i < total_threads; i++) {
         params[i].t_num = i;
@@ -241,6 +241,6 @@ int main(int argc, char *argv[]) {
 
     // }
 
-    print_matrix(t_appx, total_n, total_m);
-    print_matrix(t_exact, total_n, total_m);
+    //print_matrix(t_appx, total_n, total_m);
+    //print_matrix(t_exact, total_n, total_m);
 }
