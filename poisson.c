@@ -93,7 +93,7 @@ void* jacobi_iteration(void* v_param) {
         }
 
         printf("%d: waiting for lock.\n", t_num);
-        if (thread_mutex_lock(&mutex)) {
+        if (pthread_mutex_lock(&mutex)) {
             printf("ERROR: mutex lock failure\n");
             exit(-1);
         }
@@ -103,7 +103,7 @@ void* jacobi_iteration(void* v_param) {
             global_max_change = max_change;
         }
         printf("%d over here\n", t_num);
-        if (thread_mutex_unlock(&mutex)) {
+        if (pthread_mutex_unlock(&mutex)) {
             printf("ERROR: mutex unlock failure\n");
             exit(-1);
         }
