@@ -180,7 +180,7 @@ int main(int argc, char *argv[]) {
     mutex = calloc(1, sizeof(pthread_mutex_t));
 
     pthread_barrier_init(barrier, NULL, (unsigned int) total_threads);
-    printf("Total threads: %ud\n", (unsigned int) total_threads)
+    printf("Total threads: %ud\n", (unsigned int) total_threads);
     pthread_mutex_init(mutex, NULL);
     global_max_change = 1.0;
     
