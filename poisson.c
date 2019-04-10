@@ -36,15 +36,20 @@ void print_matrix(double* matrix, int total_n, int total_m) {
 double get_max_error(double* appx, double* exact, int total_n, int total_m) {
     
     double max_error = 0.0, curr_error = 0.0;
+    int x, y;
 
     for (int i = 0; i < total_n; i++) {
         for (int j = 0; j < total_m; j++) {
             curr_error = fabs(appx[POINT(i, j)] - exact[POINT(i, j)]);
             if (curr_error > max_error) {
                 max_error = curr_error;
+                x = i;
+                y = j;
             }
         }
     }
+
+    printf("Max error at point (%d, %d)\n", x, y);
 
     return max_error;
 
