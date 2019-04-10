@@ -75,7 +75,7 @@ void* jacobi_iteration(void* v_param) {
         for (int j = m_offset; j < (m_offset + m); j++) {
             for (int i = n_offset; i < (n_offset + n); i++) {
 
-                //printf("%d looking at global (%d, %d)\n", t_num, i, j);
+                printf("%d looking at global (%d, %d)\n", t_num, i, j);
 
                 double old = t_appx[POINT(i, j)];
                 t_appx[POINT(i, j)] = 0.25 * (t_appx[POINT((i - 1), j)] + t_appx[POINT((i + 1), j)] + t_appx[POINT(i, (j - 1))] + t_appx[POINT(i, (j + 1))]);
@@ -159,18 +159,18 @@ int main(int argc, char *argv[]) {
     double x, y;
     for (int i = 0; i < total_n; i++) {
         x = (((double) i / (double) (total_n - 1)) * x_size) + x_min;       // x
-        printf("Setting up points: (%2.4f, %2.4f) and (%2.4f, %2.4f)\n", x, y_min, x, y_max);
+        //printf("Setting up points: (%2.4f, %2.4f) and (%2.4f, %2.4f)\n", x, y_min, x, y_max);
         t_appx[POINT(i, 0)] = x * exp(y_min);                               // T(x, 0) = x
         t_appx[POINT(i, (total_m - 1))] = x * exp(y_max);                   // T(x, 1) = x * e
-        printf("\t%2.4f\t%2.4f\n", t_appx[POINT(i, 0)], t_appx[POINT(i, (total_m - 1))]);
+        //printf("\t%2.4f\t%2.4f\n", t_appx[POINT(i, 0)], t_appx[POINT(i, (total_m - 1))]);
     }
 
     for (int i = 0; i < total_m; i++) {
         y = (((double) i / (double) (total_m - 1)) * y_size) + y_min;   // y
-        printf("Setting up points: (%2.4f, %2.4f) and (%2.4f, %2.4f)\n", x_min, y, x_max, y);
+        //printf("Setting up points: (%2.4f, %2.4f) and (%2.4f, %2.4f)\n", x_min, y, x_max, y);
         t_appx[POINT(0, i)] = x_min * exp(y);                           // T(0, y) = 0
         t_appx[POINT((total_n - 1), i)] = x_max * exp(y);               // T(2, y) = 2 * e^y
-        printf("\t%2.4f\t%2.4f\n", t_appx[POINT(0, i)], t_appx[POINT((total_n - 1), i)]);
+        //printf("\t%2.4f\t%2.4f\n", t_appx[POINT(0, i)], t_appx[POINT((total_n - 1), i)]);
     }
 
     // pthreads go here
@@ -205,7 +205,7 @@ int main(int argc, char *argv[]) {
         x = (((double) i / (double) (total_n - 1)) * x_size) + x_min; // x
         for (int j = 0; j < total_m; j++) {
             y = (((double) j / (double) (total_m - 1)) * y_size) + y_min; // y
-            printf("(%2.6f, %2.6f)\n", x, y);
+            //printf("(%2.6f, %2.6f)\n", x, y);
             t_exact[POINT(i, j)] = x * exp(y);
         }
     }
