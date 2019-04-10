@@ -81,8 +81,9 @@ void* jacobi_iteration(void* v_param) {
 
                 printf("%d: looking at global (%d, %d), local (%d, %d)\n", t_num, i, j, (i - n_offset), (j - m_offset));
 
+                double old = t_appx[POINT(i, j)];
                 t_appx[POINT(i, j)] = 0.25 * (t_appx[POINT((i - 1), j)] + t_appx[POINT((i + 1), j)] + t_appx[POINT(i, (j - 1))] + t_appx[POINT(i, (j + 1))]);
-                double change = fabs(t_appx_new[POINT_LOCAL((i - n_offset), (j - m_offset))] - t_appx[POINT(i, j)]);
+                double change = fabs(t_appx[POINT(i, j)] - old);
 
                 if (change > max_change) {
                     max_change = change;
