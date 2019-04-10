@@ -61,14 +61,6 @@ void* jacobi_iteration(void* v_param) {
     
     printf("%d: Got params.\n", t_num);
 
-    // the way our jacobi iteration runs, we need a separate data structure to put our
-    // updated values into
-
-    if (t_appx_new == NULL) {
-        printf("calloc failed: could not acquire memory.\n");
-        exit(-1);
-    }
-
     printf("%d:\tn_off: %d\tm_off: %d\tn: %d\tm: %d\n", t_num, n_offset, m_offset, n, m);
     // loop while the max change is fewer than our specified delta
     while (global_max_change > delta_change) {
