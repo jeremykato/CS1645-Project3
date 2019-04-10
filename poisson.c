@@ -106,9 +106,10 @@ void* jacobi_iteration(void* v_param) {
             printf("ERROR: mutex unlock failure\n");
             exit(-1);
         }
-        int res2 = printf("%d Lock released.\n", t_num);
+        printf("%d Lock released, waiting...\n", t_num);
 
         pthread_barrier_wait(barrier);
+        printf("%d done waiting!.\n", t_num);
     }
 
     // if we reach here, we're done!
