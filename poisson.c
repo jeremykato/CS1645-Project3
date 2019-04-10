@@ -105,7 +105,7 @@ void* jacobi_iteration(void* v_param) {
             exit(-1);
         }
         //printf("%d Lock released, waiting...\n", t_num);
-        
+        printf("%d says max_change is %2.6f", max_change);
         pthread_barrier_wait(barrier);
     }
 
