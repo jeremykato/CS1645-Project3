@@ -106,7 +106,7 @@ void* jacobi_iteration(void* v_param) {
             printf("ERROR: mutex unlock failure\n");
             exit(-1);
         }
-        printf("%d says max_change is %2.6f\n", t_num, max_change);
+        //printf("%d says max_change is %2.6f\n", t_num, max_change);
         pthread_barrier_wait(barrier);
 
         if (global_max_change > max_change) {
