@@ -8,7 +8,6 @@
 #include <pthread.h>
 
 #define POINT(x, y) (x + (y * (total_n)))
-#define POINT_LOCAL(x, y) (x + (y * (n)))
 
 int total_n, total_m, total_grid_size, n, m;
 
@@ -51,14 +50,6 @@ double get_max_error(double* appx, double* exact, int total_n, int total_m) {
 
 }
 
-void copy_local_to_global(double* local, int n_off, int m_off) {
-    for (int i = n_off; i < (n_off + n); i++) {
-        for (int j = m_off; j < (m_off + m); j++) {
-            t_appx[POINT(i, j)] = local[POINT_LOCAL(i - n_off, j - m_off)]; 
-        }
-    }
-}
-
 void* jacobi_iteration(void* v_param) {
 
     struct jacobi_params *params = (struct jacobi_params*) v_param;
@@ -79,11 +70,7 @@ void* jacobi_iteration(void* v_param) {
         exit(-1);
     }
 
-    copy_local_to_global(t_appx_new, n_offset, m_offset);
-    printf("%d: Copy succeeded.\n", t_num);
-
     printf("%d:\tn_off: %d\tm_off: %d\tn: %d\tm: %d\n", t_num, n_offset, m_offset, n, m);
-
     pthread_barrier_wait(&barrier);
     // loop while the max change is fewer than our specified delta
     while (global_max_change > delta_change) {
@@ -94,8 +81,7 @@ void* jacobi_iteration(void* v_param) {
 
                 printf("%d: looking at global (%d, %d), local (%d, %d)\n", t_num, i, j, (i - n_offset), (j - m_offset));
 
-                t_appx_new[POINT_LOCAL((i - n_offset),(j - m_offset))] = 0.25 * (t_appx[POINT((i - 1), j)]
-                        + t_appx[POINT((i + 1), j)] + t_appx[POINT(i, (j - 1))] + t_appx[POINT(i, (j + 1))]);
+                t_appx[POINT(i, j)] = 0.25 * (t_appx[POINT((i - 1), j)] + t_appx[POINT((i + 1), j)] + t_appx[POINT(i, (j - 1))] + t_appx[POINT(i, (j + 1))]);
                 double change = fabs(t_appx_new[POINT_LOCAL((i - n_offset), (j - m_offset))] - t_appx[POINT(i, j)]);
 
                 if (change > max_change) {
@@ -106,16 +92,11 @@ void* jacobi_iteration(void* v_param) {
 
         pthread_mutex_lock(&mutex);
         printf("%d: Got lock, my change val is %2.12f.\n", t_num, max_change);
-        if (global_max_change > max_change) {
+        if (global_max_change < max_change) {
             global_max_change = max_change;
         }
         pthread_mutex_unlock(&mutex);
 
-        // copy old into new
-        pthread_barrier_wait(&barrier);
-        printf("%d: Waiting to copy.\n", t_num);
-        copy_local_to_global(t_appx_new, n_offset, m_offset);
-        printf("%d: Copied, waiting to go on.\n", t_num);
         pthread_barrier_wait(&barrier);
     }
 
