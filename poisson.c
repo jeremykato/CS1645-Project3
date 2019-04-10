@@ -183,11 +183,13 @@ int main(int argc, char *argv[]) {
     //printf("Total threads: %ud\n", (unsigned int) total_threads);
     pthread_mutex_init(mutex, NULL);
     global_max_change = 1.0;
+
+    printf("%d %d %d %d\n", n, m, total_n, total_m);
     
     for (int i = 0; i < total_threads; i++) {
         params[i].t_num = i;
         params[i].n_offset = ((i * n) % total_n) + 1;
-        params[i].m_offset = ((i * m) / total_m) + 1;
+        params[i].m_offset = ((i * m) % total_m) + 1;
         pthread_create((threads + i), NULL, jacobi_iteration, (void*) (params + i));
     }
 
