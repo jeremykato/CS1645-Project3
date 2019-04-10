@@ -90,7 +90,7 @@ void* jacobi_iteration(void* v_param) {
             printf("ERROR: mutex lock failure\n");
             exit(-1);
         }
-        printf("%d Got lock, my change val is %2.12f.\n", t_num, max_change);
+        printf("%d Got lock, my change val is %2.12f, global is %2.12f\n", t_num, max_change, global_max_change);
         if (global_max_change < max_change) {
             printf("%d is here\n", t_num);
             global_max_change = max_change;
