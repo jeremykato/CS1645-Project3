@@ -63,7 +63,6 @@ void* jacobi_iteration(void* v_param) {
 
     // the way our jacobi iteration runs, we need a separate data structure to put our
     // updated values into
-    double *t_appx_new = calloc(n * m, sizeof(double));
 
     if (t_appx_new == NULL) {
         printf("calloc failed: could not acquire memory.\n");
