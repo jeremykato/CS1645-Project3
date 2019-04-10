@@ -75,7 +75,7 @@ void* jacobi_iteration(void* v_param) {
         for (int j = m_offset; j < (m_offset + m); j++) {
             for (int i = n_offset; i < (n_offset + n); i++) {
 
-                //printf("%d looking at global (%d, %d)\n", t_num, i, j);
+                printf("%d looking at global (%d, %d)\n", t_num, i, j);
 
                 double old = t_appx[POINT(i, j)];
                 t_appx[POINT(i, j)] = 0.25 * (t_appx[POINT((i - 1), j)] + t_appx[POINT((i + 1), j)] + t_appx[POINT(i, (j - 1))] + t_appx[POINT(i, (j + 1))]);
@@ -172,9 +172,6 @@ int main(int argc, char *argv[]) {
         t_appx[POINT((total_n - 1), i)] = x_max * exp(y);               // T(2, y) = 2 * e^y
         //printf("\t%2.4f\t%2.4f\n", t_appx[POINT(0, i)], t_appx[POINT((total_n - 1), i)]);
     }
-
-    print_matrix(t_appx, total_n, total_m);
-
     // pthreads go here
     pthread_t *threads = calloc(total_threads, sizeof(pthread_t));
     struct jacobi_params *params = calloc(total_threads, sizeof(struct jacobi_params));
