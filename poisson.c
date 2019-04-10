@@ -66,7 +66,7 @@ void* jacobi_iteration(void* v_param) {
     
     //printf("%d: Got params.\n", t_num);
 
-    //printf("%d:\tn_off: %d\tm_off: %d\tn: %d\tm: %d\n", t_num, n_offset, m_offset, n, m);
+    printf("%d:\tn_off: %d\tm_off: %d\tn: %d\tm: %d\n", t_num, n_offset, m_offset, n, m);
     global_max_change = delta_change;
     // loop while the max change is fewer than our specified delta
     while (max_change >= delta_change) {
