@@ -98,6 +98,7 @@ void* jacobi_iteration(void* v_param) {
             global_max_change = max_change;
         }
         pthread_mutex_unlock(&mutex);
+        printf("%d: Lock released.";
 
         pthread_barrier_wait(&barrier);
     }
